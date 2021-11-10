@@ -4,7 +4,7 @@ using PyCall
 
 using UnPack
 
-using FSimZoo
+using FSimBase, FSimZoo
 using StaticArrays, ReferenceFrameRotations
 
 include("convert.jl")
