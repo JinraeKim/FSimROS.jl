@@ -16,26 +16,26 @@ fsim_msg = pyimport("fsim_interfaces.msg")
         function timer_callback(self)
             if self.state != nothing
                 msg_control = fsim_msg.RotorRateHexa()
-		# put in your custom control law
-		self.control = zeros(6)
-		msg_control.u1 = self.control[1]
-		msg_control.u2 = self.control[2]
-		msg_control.u3 = self.control[3]
-		msg_control.u4 = self.control[4]
-		msg_control.u5 = self.control[5]
-		msg_control.u6 = self.control[6]
+                # TODO: put in your custom control law
+                self.control = zeros(6)
+                msg_control.u1 = self.control[1]
+                msg_control.u2 = self.control[2]
+                msg_control.u3 = self.control[3]
+                msg_control.u4 = self.control[4]
+                msg_control.u5 = self.control[5]
+                msg_control.u6 = self.control[6]
                 self.publisher_.publish(msg_control)
             end
-	    self.get_logger().info("control: $(self.control)")
+            self.get_logger().info("control: $(self.control)")
         end
         self.timer = self.create_timer(timer_period, () -> timer_callback(self))
-	# env
-	self.multicopter = LeeHexacopter()
+        # env
+        self.multicopter = LeeHexacopter()
         # subscriber
         self.state = nothing
-        self.control = nothing  # TODO: change
+        self.control = nothing
         function listener_callback(self, msg_state)
-	    self.state = msg_to_state(self.multicopter, msg_state)
+            self.state = msg_to_state(self.multicopter, msg_state)
         end
         self.subscription = self.create_subscription(fsim_msg.PoseTwist, "state", msg -> listener_callback(self, msg), 10)
     end

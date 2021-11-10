@@ -15,8 +15,9 @@ UnPack = "3a884ed6-31ef-47d7-9d2a-63182c4928ed"
 FSimBase = "0.2"
 FSimZoo = "0.3"
 PyCall = "1.92"
-StaticArrays = "1.2"
 ReferenceFrameRotations = "2.0"
+StaticArrays = "1.2"
+UnPack "1.0"
 julia = "1"
 
 [extras]
