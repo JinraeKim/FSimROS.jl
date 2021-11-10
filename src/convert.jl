@@ -1,4 +1,4 @@
-function Base.convert(multicopter::Multicopter, x)
+function state_to_msg(multicopter::Multicopter, x)
     # Msg = pyimport("geometry_msgs.msg")
     Msg = pyimport("fsim_interfaces.msg")  # TODO
     @unpack p, v, R, ω = x
@@ -13,7 +13,7 @@ function Base.convert(multicopter::Multicopter, x)
     msg
 end
 
-function Base.convert(multicopter::Multicopter, msg)
+function msg_to_state(multicopter::Multicopter, msg)
     Msg = pyimport("fsim_interfaces.msg")
     p = [msg.pose.position.x, msg.pose.position.y, msg.pose.position.z]
     v = [msg.twist.linear.x, msg.twist.linear.y, msg.twist.linear.z]
