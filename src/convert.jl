@@ -1,4 +1,4 @@
-function convert(multicopter::Multicopter, x)
+function Base.convert(multicopter::Multicopter, x)
     @unpack p, v, R, ω = x
     quat = dcm_to_quat(SMatrix{3, 3}(R))
     # pose
@@ -12,7 +12,7 @@ function convert(multicopter::Multicopter, x)
     msg_pose, msg_twist
 end
 
-function convert(multicopter::Multicopter, msg_pose, msg_twist)
+function Base.convert(multicopter::Multicopter, msg_pose, msg_twist)
     p = [msg_pose.position.x, msg_pose.position.y, msg_pose.position.z]
     v = [msg_twist.linear.x, msg_twist.linear.y, msg_twist.linear.z]
     quat = Quaternion(msg_pose.orientation.w, msg_pose.orientation.x, msg_pose.orientation.y, msg_pose.orientation.z)  # be careful for the order
