@@ -10,5 +10,8 @@ using StaticArrays, ReferenceFrameRotations
 
 include("convert.jl")
 
+geoMsg2 = geoMsg
+export geoMsg2
+
 
 end
