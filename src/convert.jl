@@ -1,4 +1,5 @@
 function Base.convert(multicopter::Multicopter, x)
+    geoMsg = pyimport("geometry_msgs.msg")
     @unpack p, v, R, ω = x
     quat = dcm_to_quat(SMatrix{3, 3}(R))
     # pose
@@ -13,6 +14,7 @@ function Base.convert(multicopter::Multicopter, x)
 end
 
 function Base.convert(multicopter::Multicopter, msg_pose, msg_twist)
+    geoMsg = pyimport("geometry_msgs.msg")
     p = [msg_pose.position.x, msg_pose.position.y, msg_pose.position.z]
     v = [msg_twist.linear.x, msg_twist.linear.y, msg_twist.linear.z]
     quat = Quaternion(msg_pose.orientation.w, msg_pose.orientation.x, msg_pose.orientation.y, msg_pose.orientation.z)  # be careful for the order
