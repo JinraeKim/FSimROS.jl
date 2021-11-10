@@ -17,7 +17,7 @@ FSimZoo = "0.3"
 PyCall = "1.92"
 ReferenceFrameRotations = "2.0"
 StaticArrays = "1.2"
-UnPack "1.0"
+UnPack = "1.0"
 julia = "1"
 
 [extras]
