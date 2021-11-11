@@ -9,9 +9,12 @@ See `./test/pubsub`.
 
 ### Processor in the loop simulation (PILS)
 See `./test/PILS`.
-For example, set position control example results in (x8 speed):
+- On a terminal, run as `julia test/PILS/simulator.jl` and wait until a figure is shown.
+- On a new terminal, run as `julia test/PILS/controller.jl`.
+- On another new terminal, run as `julia test/PILS/gcs.jl` (which is "timer").
+See the result of circular trajectory tracking (video speed adjusted):
 
-![Alt Text](./figures/PILS_set_position_control.gif)
+![Alt Text](./figures/PILS_trajectory_tracking.gif)
 
 ## To-do
 - [ ] sync issues (maybe?) for divergence of controller (which requires integration)
