@@ -10,7 +10,8 @@ See `./test/pubsub`.
 ### Processor in the loop simulation (PILS)
 See `./test/PILS`.
 For example, set position control example results in:
-![Alt Text](./figures/PILS_set_position_control.mp4.gif)
+
+![Alt Text](./figures/PILS_set_position_control.mp4)
 
 ## To-do
 - [ ] sync issues (maybe?) for divergence of controller (which requires integration)
