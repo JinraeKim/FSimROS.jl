@@ -3,6 +3,7 @@ using FlightSims
 using FSimROS
 using Plots
 using FSimPlots
+using UnPack
 
 rclpy = pyimport("rclpy")
 rosNode = pyimport("rclpy.node")
@@ -28,31 +29,40 @@ end
     function __init__(self)
         rosNode.Node.__init__(self, "state_node")
         # publisher
-        self.publisher_ = self.create_publisher(fsim_msg.PoseTwist, "state", 10)
-        timer_period = 0.1
+        self.publisher_ = self.create_publisher(fsim_msg.PoseTwist, "state", 5)
+        timer_period = 0.0001
+	self.i = 0
         self.fig = plot()  # it might not be a good idea to run plotting function in StateNode for latency
         function timer_callback(self)
             msg = state_to_msg(self.env.multicopter, copy(self.simulator.integrator.u))
-            self.publisher_.publish(msg)
-            self.get_logger().info("state: $(self.simulator.integrator.u)")
+            self.publisher_.publish(msg)  # publish
+	    if self.i % 1000 == 0
+		    self.get_logger().info("state: $(copy(self.simulator.integrator.u))")
+	    end
             if self.control_received
                 step_until!(self.simulator, self.simulator.integrator.t + timer_period)
             end
-            plot!(self.fig, self.env.multicopter, copy(self.simulator.integrator.u); xlim=(-10, 10), ylim=(-10, 10), zlim=(-10, 10))
-            display(self.fig)
-            self.fig = plot()
+	    self.i = self.i + 1
+	    if self.i % 1000 == 0
+	    # if false
+		    # plotting
+		    plot!(self.fig, self.env.multicopter, copy(self.simulator.integrator.u); xlim=(-2, 2), ylim=(-2, 2), zlim=(-1, 10))
+		    display(self.fig)
+		    self.fig = plot()
+	    end
         end
         self.timer = self.create_timer(timer_period, () -> timer_callback(self))
         # env
-        multicopter = LeeHexacopter()
+	multicopter = LeeHexacopter()
         self.env = Multicopter_ZOH_Input(multicopter)
         state0 = State(self.env)()
-        u0 = zeros(6)  # initial control input
-        self.simulator = Simulator(state0, Dynamics!(self.env), u0; tf=10_000)  # second
+	@unpack m, g = self.env.multicopter
+	u0 = (m*g/6) * ones(6)  # initial control input
+        self.simulator = Simulator(state0, Dynamics!(self.env), u0; tf=100)  # second
         # subscriber
         self.control_received = false
         function listener_callback(self, msg_control)
-            @show self.control_received
+            # @show self.control_received
             if !self.control_received
                 self.control_received = true
             end
