@@ -8,6 +8,7 @@ using UnPack
 rclpy = pyimport("rclpy")
 rosNode = pyimport("rclpy.node")
 fsim_msg = pyimport("fsim_interfaces.msg")
+std_msg = pyimport("std_msgs.msg")
 
 
 struct Multicopter_ZOH_Input <: AbstractEnv
@@ -30,20 +31,24 @@ end
         rosNode.Node.__init__(self, "state_node")
         # publisher
         self.publisher_ = self.create_publisher(fsim_msg.PoseTwist, "state", 5)
-        timer_period = 0.0001
+        timer_period = 0.001
 	self.i = 0
+	self.t = nothing
+	self.time_received = false
         self.fig = plot()  # it might not be a good idea to run plotting function in StateNode for latency
         function timer_callback(self)
             msg = state_to_msg(self.env.multicopter, copy(self.simulator.integrator.u))
             self.publisher_.publish(msg)  # publish
-	    if self.i % 1000 == 0
-		    self.get_logger().info("state: $(copy(self.simulator.integrator.u))")
-	    end
-            if self.control_received
-                step_until!(self.simulator, self.simulator.integrator.t + timer_period)
+	    # if self.i % 1000 == 0
+		    # self.get_logger().info("time: $(self.t)")
+		    self.get_logger().info("time: $(self.t), state: $(copy(self.simulator.integrator.u))")
+	    # end
+            if self.control_received && self.t != nothing
+                # step_until!(self.simulator, self.simulator.integrator.t + timer_period)
+                step_until!(self.simulator, self.t)
             end
 	    self.i = self.i + 1
-	    if self.i % 1000 == 0
+	    if self.i % 100 == 0  # too frequent plotting may yield divergence of simulation due to communication delay
 	    # if false
 		    # plotting
 		    plot!(self.fig, self.env.multicopter, copy(self.simulator.integrator.u); xlim=(-2, 2), ylim=(-2, 2), zlim=(-1, 10))
@@ -69,7 +74,16 @@ end
             input = [msg_control.u1, msg_control.u2, msg_control.u3, msg_control.u4, msg_control.u5, msg_control.u6]
             self.simulator.integrator.p = input
         end
+	function listener_callback_time(self, msg)
+		t = msg.data
+		if !self.time_received
+			self.time_received = true
+			self.simulator.integrator.t = t
+		end
+		self.t = t
+	end
         self.subscription = self.create_subscription(fsim_msg.RotorRateHexa, "control", msg -> listener_callback(self, msg), 10)
+        self.subscription_time = self.create_subscription(std_msg.Float64, "time", msg -> listener_callback_time(self, msg), 10)
     end
 end
 
