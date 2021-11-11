@@ -17,7 +17,7 @@ See the result of circular trajectory tracking (video speed adjusted):
 ![Alt Text](./figures/PILS_trajectory_tracking.gif)
 
 ## To-do
-- [ ] sync issues (maybe?) for divergence of controller (which requires integration)
+- [x] sync issues (maybe?) for divergence of controller (which requires integration)
     - Perhaps, we need a central node for topic `time` and each simulation and controller receives the `time` to propagate own dynamical system and adaptive control system.
 
 
