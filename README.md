@@ -9,7 +9,7 @@ See `./test/pubsub`.
 
 ### Processor in the loop simulation (PILS)
 See `./test/PILS`.
-For example, set position control example results in:
+For example, set position control example results in (x8 speed):
 
 ![Alt Text](./figures/PILS_set_position_control.gif)
 
