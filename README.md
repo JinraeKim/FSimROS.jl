@@ -4,7 +4,15 @@ A package of [FlightSims.jl](https://github.com/JinraeKim/FlightSims.jl) family 
 Note that `./src/fsim_interfaces` is a ROS2 package for providing interfaces of FlightSims.jl family.
 
 ## Examples
-See `./test`.
+### Minimal publisher-subscriber example
+See `./test/pubsub`.
+
+### Processor in the loop simulation (PILS)
+See `./test/PILS`.
+
+## To-do
+- [ ] sync issues (maybe?) for divergence of controller (which requires integration)
+    - Perhaps, we need a central node for topic `time` and each simulation and controller receives the `time` to propagate own dynamical system and adaptive control system.
 
 
 ## Notes
