@@ -11,7 +11,7 @@ See `./test/pubsub`.
 See `./test/PILS`.
 For example, set position control example results in:
 
-![Alt Text](./figures/PILS_set_position_control.mp4)
+![Alt Text](./figures/PILS_set_position_control.gif)
 
 ## To-do
 - [ ] sync issues (maybe?) for divergence of controller (which requires integration)
