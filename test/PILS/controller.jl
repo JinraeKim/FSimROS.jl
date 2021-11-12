@@ -60,7 +60,7 @@ end
         rosNode.Node.__init__(self, "control_node")
         # publisher
         self.publisher_ = self.create_publisher(fsim_msg.RotorRateHexa, "control", 5)
-        timer_period = 0.0001
+        timer_period = 1/500
         self.i = 0
         self.t = nothing
         self.time_received = false
