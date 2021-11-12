@@ -9,10 +9,13 @@ See `./test/pubsub`.
 
 ### Processor in the loop simulation (PILS)
 See `./test/PILS`. Use a docker image [ihany/ros:foxy-fsimros](https://hub.docker.com/layers/ihany/ros/foxy-fsimros/images/sha256-ec32acd18c74ae521294a90aa7616a513494959f33c6c13ee180a25b3a3a55db?context=repo), or use the `./Dockerfile`.
+- Source `./dev_ws` in the docker image by `. install/setup.zsh`.
+    - (Recommended) Enter a tmux session by `ts your_session_name`.
+- Move to: `cd ~/.julia/dev/FSimROS`.
 - On a terminal, run as `julia test/PILS/viz.jl`.
 - On a new terminal, run as `julia test/PILS/simulator.jl`.
 - On a new terminal, run as `julia test/PILS/controller.jl`.
-- Wait other nodes. Then, on another new terminal, run as `julia test/PILS/gcs.jl` (which is "timer").
+- Wait other nodes. Then, on another new terminal, run as `julia test/PILS/timer.jl` (which provides "simulation time").
 See the result of circular trajectory tracking (video speed adjusted):
 
 ![Alt Text](./figures/PILS_trajectory_tracking_online_stats.gif)
