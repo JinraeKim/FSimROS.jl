@@ -21,7 +21,7 @@ Use a docker image [ihany/ros:foxy-fsimros](https://hub.docker.com/layers/ihany/
 (which provides "simulation time"; to avoid communication delay due to JIT compile, it may sleep for a moment).
 See the result (video speed adjusted):
 
-![Alt Text](./figures/PILS_trajectory_tracking_online_stats.gif)
+![Alt Text](./figures/PILS_trajectory_tracking.gif)
 
 ## To-do
 - [ ] Update the docker image's building process to include FSimROS.jl
