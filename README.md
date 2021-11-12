@@ -7,7 +7,7 @@ Note that `./src/fsim_interfaces` is a ROS2 package for providing interfaces of 
 ### Minimal publisher-subscriber example
 See `./test/pubsub`.
 
-### Processor in the loop simulation (PILS)
+### Simulation and visualisation with data communication via ROS2
 See `./test/PILS` for a circular trajectory tracking of a hexacopter with a
 backstepping position controller (500 Hz communication).
 Use a docker image [ihany/ros:foxy-fsimros](https://hub.docker.com/layers/ihany/ros/foxy-fsimros/images/sha256-ec32acd18c74ae521294a90aa7616a513494959f33c6c13ee180a25b3a3a55db?context=repo), or use the `./Dockerfile`.
@@ -24,9 +24,10 @@ See the result (video speed adjusted):
 ![Alt Text](./figures/PILS_trajectory_tracking.gif)
 
 ## To-do
-- [ ] Update the docker image's building process to include FSimROS.jl
 - [x] sync issues (maybe?) for divergence of controller (which requires integration)
     - Perhaps, we need a central node for topic `time` and each simulation and controller receives the `time` to propagate own dynamical system and adaptive control system.
+- [ ] Update the docker image's building process to include FSimROS.jl
+- [ ] Add an example of processor-in-the-loop simulation (PILS) with Pixhawk.
 
 
 ## Notes
