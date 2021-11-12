@@ -9,12 +9,13 @@ See `./test/pubsub`.
 
 ### Processor in the loop simulation (PILS)
 See `./test/PILS`.
-- On a terminal, run as `julia test/PILS/simulator.jl` and wait until a figure is shown.
+- On a terminal, run as `julia test/PILS/viz.jl`.
+- On a new terminal, run as `julia test/PILS/simulator.jl`.
 - On a new terminal, run as `julia test/PILS/controller.jl`.
-- On another new terminal, run as `julia test/PILS/gcs.jl` (which is "timer").
+- Wait other nodes. Then, on another new terminal, run as `julia test/PILS/gcs.jl` (which is "timer").
 See the result of circular trajectory tracking (video speed adjusted):
 
-![Alt Text](./figures/PILS_trajectory_tracking.gif)
+![Alt Text](./figures/PILS_trajectory_tracking_online_stats.gif)
 
 ## To-do
 - [x] sync issues (maybe?) for divergence of controller (which requires integration)
