@@ -1,9 +1,11 @@
 using PyCall
 using FlightSims
 using FSimROS
-using Plots
-using FSimPlots
+# using Plots
+# theme(:lime)
+# using FSimPlots
 using UnPack
+# using OnlineStats
 
 rclpy = pyimport("rclpy")
 rosNode = pyimport("rclpy.node")
@@ -31,30 +33,40 @@ end
         rosNode.Node.__init__(self, "state_node")
         # publisher
         self.publisher_ = self.create_publisher(fsim_msg.PoseTwist, "state", 5)
-        timer_period = 0.001
+        timer_period = 0.0001
 	self.i = 0
 	self.t = nothing
 	self.time_received = false
-        self.fig = plot()  # it might not be a good idea to run plotting function in StateNode for latency
+        # self.fig = plot()  # it might not be a good idea to run plotting function in StateNode for latency
+	# self.stat = Group(Partition(KHist(25)), Partition(KHist(25)), Partition(KHist(25)))
+	# self.plot_stat = false
         function timer_callback(self)
-            msg = state_to_msg(self.env.multicopter, copy(self.simulator.integrator.u))
+		x = copy(self.simulator.integrator.u)
+            msg = state_to_msg(self.env.multicopter, x)
             self.publisher_.publish(msg)  # publish
 	    # if self.i % 1000 == 0
 		    # self.get_logger().info("time: $(self.t)")
-		    self.get_logger().info("time: $(self.t), state: $(copy(self.simulator.integrator.u))")
+		    self.get_logger().info("time: $(self.t), state: $(x)")
 	    # end
             if self.control_received && self.t != nothing
-                # step_until!(self.simulator, self.simulator.integrator.t + timer_period)
-                step_until!(self.simulator, self.t)
+		    # self.plot_stat = true
+		    # step_until!(self.simulator, self.simulator.integrator.t + timer_period)
+		    step_until!(self.simulator, self.t)
             end
-	    self.i = self.i + 1
-	    if self.i % 100 == 0  # too frequent plotting may yield divergence of simulation due to communication delay
-	    # if false
-		    # plotting
-		    plot!(self.fig, self.env.multicopter, copy(self.simulator.integrator.u); xlim=(-2, 2), ylim=(-2, 2), zlim=(-1, 10))
-		    display(self.fig)
-		    self.fig = plot()
-	    end
+	    #self.i = self.i + 1
+	    #if self.i % 100 == 0  # too frequent plotting may yield divergence of simulation due to communication delay
+	    ## if false
+	    #        # plotting multicopter
+	    #        # plot!(self.fig, self.env.multicopter, copy(self.simulator.integrator.u); xlim=(-2, 2), ylim=(-2, 2), zlim=(-1, 10))
+	    #        # display(self.fig)
+	    #        # self.fig = plot()
+	    #end
+	    ## if self.plot_stat
+	    #if true
+	    #        # plotting stats
+	    #        fit!(self.stat, zip(x.p...))
+	    #        display(plot(self.stat; layout=(3, 1)))
+	    #end
         end
         self.timer = self.create_timer(timer_period, () -> timer_callback(self))
         # env

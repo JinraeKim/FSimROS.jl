@@ -3,7 +3,6 @@ using FlightSims
 using FSimROS
 using DataFrames
 using UnPack
-using Debugger
 using ComponentArrays
 
 rclpy = pyimport("rclpy")
@@ -63,7 +62,7 @@ end
         rosNode.Node.__init__(self, "control_node")
         # publisher
         self.publisher_ = self.create_publisher(fsim_msg.RotorRateHexa, "control", 5)
-        timer_period = 0.001
+        timer_period = 0.0001
 	self.i = 0
 	self.t = nothing
 	self.time_received = false
@@ -99,7 +98,6 @@ end
 	self.env = ControllerEnv(pos_cmd_func)
 	x0 = State(self.env.multicopter)()  # dummy initial state of multicopter
 	self.simulator = Simulator(State(self.env)(), Dynamics!(self.env), x0; tf=100)  # second
-	@bp
         # subscriber
 	self.state_multicopter_received = false
         function listener_callback(self, msg_state)
