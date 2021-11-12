@@ -8,7 +8,7 @@ Note that `./src/fsim_interfaces` is a ROS2 package for providing interfaces of 
 See `./test/pubsub`.
 
 ### Processor in the loop simulation (PILS)
-See `./test/PILS`.
+See `./test/PILS`. Use a docker image [ihany/ros:foxy-fsimros](https://hub.docker.com/layers/ihany/ros/foxy-fsimros/images/sha256-ec32acd18c74ae521294a90aa7616a513494959f33c6c13ee180a25b3a3a55db?context=repo).
 - On a terminal, run as `julia test/PILS/viz.jl`.
 - On a new terminal, run as `julia test/PILS/simulator.jl`.
 - On a new terminal, run as `julia test/PILS/controller.jl`.
