@@ -22,9 +22,9 @@ std_msg = pyimport("std_msgs.msg")
 	self.time_received = false
         self.fig_multicopter = plot()  # it might not be a good idea to run plotting function in StateNode for latency
 	self.fig_stat = plot()
-	self.stat_p_x = Partition(KHist(10))
-	self.stat_p_y = Partition(KHist(10))
-	self.stat_p_z = Partition(KHist(10))
+	self.stat_E = MovingWindow(Float64, 500)
+	self.stat_N = MovingWindow(Float64, 500)
+	self.stat_U = MovingWindow(Float64, 500)
         # env
 	self.multicopter = LeeHexacopter()
         # subscriber
@@ -38,13 +38,13 @@ std_msg = pyimport("std_msgs.msg")
 			self.fig_multicopter = plot()
 			plot!(self.fig_multicopter, self.multicopter, x; xlim=(-2, 2), ylim=(-2, 2), zlim=(-1, 10))
 			# plotting stats
-			fit!(self.stat_p_x, x.p[1])
-			fit!(self.stat_p_y, x.p[2])
-			fit!(self.stat_p_z, x.p[3])
-			fig_stat_p_x = plot(self.stat_p_x)
-			fig_stat_p_y = plot(self.stat_p_y)
-			fig_stat_p_z = plot(self.stat_p_z)
-			self.fig_stat = plot(fig_stat_p_x, fig_stat_p_y, fig_stat_p_z; layout=(3, 1))
+			fit!(self.stat_E, x.p[2])
+			fit!(self.stat_N, x.p[1])
+			fit!(self.stat_U, -x.p[3])
+			fig_stat_E = plot(1:minimum([self.stat_E.b, self.stat_E.n]), self.stat_E.value; title="E [m]", label=nothing)
+			fig_stat_N = plot(1:minimum([self.stat_N.b, self.stat_N.n]), self.stat_N.value; title="N [m]", label=nothing)
+			fig_stat_U = plot(1:minimum([self.stat_U.b, self.stat_U.n]), self.stat_U.value; title="U [m]", label=nothing)
+			self.fig_stat = plot(fig_stat_E, fig_stat_N, fig_stat_U; layout=(3, 1))
 		end
 		display(plot(self.fig_multicopter, self.fig_stat, layout=(1, 2)))
         end

@@ -5,7 +5,7 @@ rosNode = pyimport("rclpy.node")
 std_msg = pyimport("std_msgs.msg")
 
 
-@pydef mutable struct GCSNode <: rosNode.Node
+@pydef mutable struct TimerNode <: rosNode.Node
     function __init__(self)
         rosNode.Node.__init__(self, "time")
 	self.sent = false
@@ -37,10 +37,10 @@ end
 
 function main(args=nothing)
      rclpy.init(args=args)
-     println("gcs node started")
-     gcs_node = GCSNode()
-     rclpy.spin(gcs_node)
-     gcs_node.destroy_node()
+     println("timer node started")
+     timer_node = TimerNode()
+     rclpy.spin(timer_node)
+     timer_node.destroy_node()
      rclpy.shutdown()
 end
 
