@@ -26,7 +26,7 @@ See the result (video speed adjusted):
 ## To-do
 - [x] sync issues (maybe?) for divergence of controller (which requires integration)
     - Perhaps, we need a central node for topic `time` and each simulation and controller receives the `time` to propagate own dynamical system and adaptive control system.
-- [ ] Update the docker image's building process to include FSimROS.jl
+- [x] Update the docker image's building process to include FSimROS.jl
 - [ ] Add an example of processor-in-the-loop simulation (PILS) with Pixhawk.
 
 
