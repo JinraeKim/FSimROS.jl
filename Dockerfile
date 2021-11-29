@@ -1,15 +1,20 @@
 FROM ros:foxy
 
+# linux/amd64, linux/arm64, etc.
+ARG TARGETPLATFORM
+ENV JULIA_MAJOR_VERSION 1.6
+ENV JULIA_VERSION 1.6.4
+
 RUN apt-get update && apt-get install -y \
-    ros-${ROS_DISTRO}-turtlesim \
-    ros-${ROS_DISTRO}-demo-nodes-py \
+    ros-${ROS_DISTRO}-turtlesim \ 
+    ros-${ROS_DISTRO}-demo-nodes-py \ 
     wget \
     curl \
     xclip \
     git \
     zsh \
     trash-cli \
-    tmux && \
+    tmux && \ 
     rm -rf /var/lib/apt/lists/*
 
 RUN chsh -s `which zsh`  # change shell
@@ -41,20 +46,22 @@ RUN cd /root/dev_ws && . /opt/ros/${ROS_DISTRO}/setup.sh && \
     colcon build  # source and https://answers.ros.org/question/373976/how-to-build-using-colcon-inside-a-dockerfile/
 WORKDIR /root
 
-
 # install Julia
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.3-linux-x86_64.tar.gz
-RUN tar xf julia-1.6.3-linux-x86_64.tar.gz
-RUN sudo ln -s ~/julia-1.6.3/bin/julia /usr/local/bin/julia
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then ARCHITECTURE=linux-x86_64 PREFIX=x64; elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then ARCHITECTURE=linux-aarch64 PREFIX=aarch64; fi \
+    && wget "https://julialang-s3.julialang.org/bin/linux/${PREFIX}/${JULIA_MAJOR_VERSION}/julia-${JULIA_VERSION}-${ARCHITECTURE}.tar.gz" \
+    && tar xf "julia-${JULIA_VERSION}-${ARCHITECTURE}.tar.gz"
+RUN sudo ln -s ~/julia-${JULIA_VERSION}/bin/julia /usr/local/bin/julia
+
+#RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.3-linux-x86_64.tar.gz
+#RUN tar xf julia-1.6.3-linux-x86_64.tar.gz
+#RUN sudo ln -s ~/julia-1.6.3/bin/julia /usr/local/bin/julia
 
 # install Julia packages
 RUN mkdir -p /root/.julia/dev  # for dev
 # install useful packages
-RUN julia -e 'using Pkg; Pkg.add.(["PyCall", "UnPack", "Transducers", "Plots", "OnlineStats", "DataFrames", "ComponentArrays"])'
+RUN julia -e 'using Pkg; Pkg.add.(["Revise", "PyCall", "UnPack", "Transducers", "Plots", "OnlineStats", "DataFrames", "ComponentArrays"])'
 # FlightSims.jl family
 RUN julia -e 'using Pkg; Pkg.develop.(["FlightSims", "FSimBase", "FSimZoo", "FSimPlots", "FSimROS"])'
-# change it after FSimROS is registered
-# RUN julia -e 'using Pkg; Pkg.develop.(["https://github.com/JinraeKim/FSimROS.jl"])
 
 
 WORKDIR /root/dev_ws
