@@ -29,7 +29,7 @@ std_msg = pyimport("std_msgs.msg")
         # subscriber
         self.control_received = false
         function listener_callback(self, msg_state)
-            if self.t != nothing
+            # if self.t != nothing
                 x = msg_to_state(self.multicopter, msg_state)
                 self.i = self.i + 1
                 # if false
@@ -44,7 +44,7 @@ std_msg = pyimport("std_msgs.msg")
                 fig_stat_N = plot(1:minimum([self.stat_N.b, self.stat_N.n]), self.stat_N.value; title="N [m]", label=nothing)
                 fig_stat_U = plot(1:minimum([self.stat_U.b, self.stat_U.n]), self.stat_U.value; title="U [m]", label=nothing)
                 self.fig_stat = plot(fig_stat_E, fig_stat_N, fig_stat_U; layout=(3, 1))
-            end
+            # end
             display(plot(self.fig_multicopter, self.fig_stat, layout=(1, 2)))
         end
         function listener_callback_time(self, msg)
