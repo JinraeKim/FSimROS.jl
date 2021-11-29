@@ -62,6 +62,7 @@ WORKDIR /root/.julia/dev/FSimROS
 RUN git checkout master
 RUN git fetch
 RUN git rebase origin/master
+RUN julia -e 'using Pkg; Pkg.precompile()'
 # RUN julia -e 'include("test/precompile.jl")'
 
 
