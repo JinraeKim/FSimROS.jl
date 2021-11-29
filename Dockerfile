@@ -52,10 +52,6 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then ARCHITECTURE=linux-x86_64 PRE
     && tar xf "julia-${JULIA_VERSION}-${ARCHITECTURE}.tar.gz"
 RUN sudo ln -s ~/julia-${JULIA_VERSION}/bin/julia /usr/local/bin/julia
 
-#RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.3-linux-x86_64.tar.gz
-#RUN tar xf julia-1.6.3-linux-x86_64.tar.gz
-#RUN sudo ln -s ~/julia-1.6.3/bin/julia /usr/local/bin/julia
-
 # install Julia packages
 RUN mkdir -p /root/.julia/dev  # for dev
 # install useful packages
