@@ -3,6 +3,18 @@ A package of [FlightSims.jl](https://github.com/JinraeKim/FlightSims.jl) family 
 
 Note that `./src/fsim_interfaces` is a ROS2 package for providing interfaces of FlightSims.jl family.
 
+## Notes
+- ROS2 should be installed.
+- Put `./src/fsim_interfaces` in `dev_ws/src` (ROS2 convention; don't be confused with `./src`) where your ROS2 workspace is, namely, `dev_ws`.
+- (Startup latency)
+Using [PackageCompiler.jl](https://github.com/JuliaLang/PackageCompiler.jl) might be a good solution to this issue.
+For this, see `test/precompile.jl` (and it is definitely helpful).
+However,
+this remedy did not solve this issue completely.
+Instead,
+simply adding auxiliary lines as the initialisation of each node works well.
+Note that the main bottleneck was simulator update, e.g., `step_until!` exported from FlightSims.jl.
+
 ## Examples
 ### Minimal publisher-subscriber example
 See `./test/pubsub`.
@@ -41,14 +53,5 @@ See the result (video speed adjusted):
 
 
 ## Notes
-- ROS2 should be installed.
-- Put `./src/fsim_interfaces` in `dev_ws/src` (ROS2 convention; don't be confused with `./src`) where your ROS2 workspace is, namely, `dev_ws`.
 - Tested with only few test environments, e.g., Ubuntu 20.04, ROS2 foxy, docker.
-- You must properly source the appropriate workspace in every terminal.
-- (Startup latency)
-Using [PackageCompiler.jl](https://github.com/JuliaLang/PackageCompiler.jl) might be a good solution to this issue.
-However,
-I was trying to reduce the first-execution delay (startup latency) of Julia code using [PackageCompiler.jl](https://github.com/JuliaLang/PackageCompiler.jl), but it failed.
-Instead,
-simply adding auxiliary lines as the initialisation of each node works well.
-The main bottleneck was simulator update, e.g., `step_until!` exported from FlightSims.jl.
+
