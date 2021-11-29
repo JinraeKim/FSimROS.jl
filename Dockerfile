@@ -55,11 +55,14 @@ RUN sudo ln -s ~/julia-${JULIA_VERSION}/bin/julia /usr/local/bin/julia
 # install Julia packages
 RUN mkdir -p /root/.julia/dev  # for dev
 # install useful packages
-RUN julia -e 'using Pkg; Pkg.add.(["Revise", "PyCall", "UnPack", "Transducers", "Plots", "OnlineStats", "DataFrames", "ComponentArrays"])'
+RUN julia -e 'using Pkg; Pkg.add.(["Revise", "PyCall", "UnPack", "Transducers", "Plots", "OnlineStats", "DataFrames", "ComponentArrays", "PackageCompiler"])'
 # FlightSims.jl family
 RUN julia -e 'using Pkg; Pkg.develop.(["FlightSims", "FSimBase", "FSimZoo", "FSimPlots", "FSimROS"])'
-# WORKDIR /root/.julia/dev/FSimROS
-# RUN julia -e 'include("test/precompile.jl")'
+WORKDIR /root/.julia/dev/FSimROS
+RUN git checkout master
+RUN git fetch
+RUN git rebase origin/master
+RUN julia -e 'include("test/precompile.jl")'
 
 
 WORKDIR /root/dev_ws
