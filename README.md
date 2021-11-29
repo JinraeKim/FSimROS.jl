@@ -11,10 +11,16 @@ See `./test/pubsub`.
 See `./test/PILS` for a circular trajectory tracking of a hexacopter with a
 backstepping position controller (500 Hz communication).
 Use a docker image [ihany/ros:foxy-fsimros](https://hub.docker.com/layers/ihany/ros/foxy-fsimros/images/sha256-ec32acd18c74ae521294a90aa7616a513494959f33c6c13ee180a25b3a3a55db?context=repo), or use the `./Dockerfile` (supported platforms: `linux/amd64`, `linux/arm64`).
+
 The following instruction assumes that a related docker container is running; e.g.,
-`docker run --name ros --network host --rm -it -e display=$display -v /tmp/.x11-unix:/tmp.x11-unix ihany/ros:foxy-fsimros`
-    - `-e display=$display -v /tmp/.x11-unix:/tmp.x11-unix`: for visualisation
-    - `--network host`: (optional) to communicate with other machines in the same network
+
+```
+docker run --name ros --network host --rm -it -e display=$display -v /tmp/.x11-unix:/tmp.x11-unix ihany/ros:foxy-fsimros
+```
+- `-e display=$display -v /tmp/.x11-unix:/tmp.x11-unix`: for visualisation
+- `--network host`: (optional) to communicate with other machines in the same network
+
+Instruction:
 - Source `./dev_ws` in the docker image by `. install/setup.zsh`.
     - (Recommended) Enter a tmux session by `ts your_session_name`.
 - Move to: `cd ~/.julia/dev/FSimROS`.
