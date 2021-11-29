@@ -5,6 +5,7 @@ using FSimZoo
 using FSimROS
 using FSimPlots
 using Plots
+ENV["GKSwstype"]="nul"
 theme(:lime)
 using UnPack
 using OnlineStats
