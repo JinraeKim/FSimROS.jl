@@ -6,9 +6,11 @@ create_sysimage(
 		[
 		 "PyCall",
 		 "FlightSims",
+		 "FSimBase",
+		 "FSimZoo",
 		 "FSimROS",
-		 "Plots",
 		 "FSimPlots",
+		 "Plots",
 		 "UnPack",
 		 "OnlineStats",
 		 "DataFrames",

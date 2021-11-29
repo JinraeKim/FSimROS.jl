@@ -1,9 +1,11 @@
 using PyCall
 using FlightSims
+using FSimBase
+using FSimZoo
 using FSimROS
+using FSimPlots
 using Plots
 theme(:lime)
-using FSimPlots
 using UnPack
 using OnlineStats
 using DataFrames
