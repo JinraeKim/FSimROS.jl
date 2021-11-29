@@ -94,7 +94,7 @@ end
 function plot_figs(multicopter, x)
 	fig_multicopter = plot_traj(multicopter, x)
 	fig_stat = plot_stat(x)
-	display(plot(fig_multicopter, fig_stat, layout=(1, 2)))
+	# display(plot(fig_multicopter, fig_stat, layout=(1, 2)))
 end
 
 
