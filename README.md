@@ -28,7 +28,6 @@ Instruction:
 - On a new terminal, run as `julia test/PILS/simulator.jl`.
 - On a new terminal, run as `julia test/PILS/controller.jl`.
 - Wait other nodes. Then, on another new terminal, run as `julia test/PILS/timer.jl`
-(which provides "simulation time"; to avoid communication delay due to JIT compile, it may sleep for a moment).
 See the result (video speed adjusted):
 
 ![Alt Text](./figures/sim_trajectory_tracking.gif)
@@ -46,5 +45,10 @@ See the result (video speed adjusted):
 - Put `./src/fsim_interfaces` in `dev_ws/src` (ROS2 convention; don't be confused with `./src`) where your ROS2 workspace is, namely, `dev_ws`.
 - Tested with only few test environments, e.g., Ubuntu 20.04, ROS2 foxy, docker.
 - You must properly source the appropriate workspace in every terminal.
-- I was trying to reduce the first-execution delay (startup latency) of Julia code using [PackageCompiler.jl](https://github.com/JuliaLang/PackageCompiler.jl), but it failed.
-Instead, simply adding auxiliary lines as the initialisation of each node works well.
+- (Startup latency)
+Using [PackageCompiler.jl](https://github.com/JuliaLang/PackageCompiler.jl) might be a good solution to this issue.
+However,
+I was trying to reduce the first-execution delay (startup latency) of Julia code using [PackageCompiler.jl](https://github.com/JuliaLang/PackageCompiler.jl), but it failed.
+Instead,
+simply adding auxiliary lines as the initialisation of each node works well.
+The main bottleneck was simulator update, e.g., `step_until!` exported from FlightSims.jl.

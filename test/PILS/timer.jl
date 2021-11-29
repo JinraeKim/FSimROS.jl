@@ -25,9 +25,9 @@ std_msg = pyimport("std_msgs.msg")
 		    self.sent = [true, true, false]
 	    elseif self.sent == [true, true, false]
 		    self.sent = [true, true, true]
-		    sleep_time = 10
-		    self.get_logger().info("sleep time: $(sleep_time) [s]. Wait a moment plz...")
-		    sleep(sleep_time)
+		    # sleep_time = 10
+		    # self.get_logger().info("sleep time: $(sleep_time) [s]. Wait a moment plz...")
+		    # sleep(sleep_time)
 	    end
             self.publisher_.publish(msg)  # publish
             self.get_logger().info("time: $(self.t)")
