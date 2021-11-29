@@ -58,7 +58,7 @@ RUN mkdir -p /root/.julia/dev  # for dev
 RUN julia -e 'using Pkg; Pkg.add.(["Revise", "PyCall", "UnPack", "Transducers", "Plots", "OnlineStats", "DataFrames", "ComponentArrays", "PackageCompiler", "DifferentialEquations"])'
 # FlightSims.jl family
 RUN julia -e 'using Pkg; Pkg.develop.(["FlightSims", "FSimBase", "FSimZoo", "FSimPlots", "FSimROS"])'
-WORKDIR /root/.julia/dev
+WORKDIR /root/.julia/dev/FSimROS
 RUN julia -e 'include("test/precompile.jl")'
 
 
