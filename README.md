@@ -33,6 +33,7 @@ docker run --name ros --network host --rm -it -e display=$display -v /tmp/.x11-u
 - `--network host`: (optional) to communicate with other machines in the same network
 
 Instruction:
+- (Note) The Julia packages in docker image may be not up-to-date. You may have to the latest commit of branch `master`, for example, `git fetch`; `git checkout master`; `git rebase origin/master` at `~/.julia/dev/FSimROS`.
 - Source `./dev_ws` in the docker image by `. install/setup.zsh`.
     - (Recommended) Enter a tmux session by `ts your_session_name`.
 - Move to: `cd ~/.julia/dev/FSimROS`.
@@ -49,6 +50,7 @@ See the result (video speed adjusted):
     - Perhaps, we need a central node for topic `time` and each simulation and controller receives the `time` to propagate own dynamical system and adaptive control system.
 - [x] Update the docker image's building process to include FSimROS.jl
 - [x] **Reduce first-execution delay of Julia code**
+- [ ] Make the docker image stable, i.e., consistent version control of Julia packages
 - [ ] Add an example of processor-in-the-loop simulation (PILS) with Pixhawk.
 
 
