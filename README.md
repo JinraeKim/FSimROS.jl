@@ -10,7 +10,7 @@ See `./test/pubsub`.
 ### Simulation and visualisation with data communication via ROS2
 See `./test/PILS` for a circular trajectory tracking of a hexacopter with a
 backstepping position controller (500 Hz communication).
-Use a docker image [ihany/ros:foxy-fsimros](https://hub.docker.com/layers/ihany/ros/foxy-fsimros/images/sha256-ec32acd18c74ae521294a90aa7616a513494959f33c6c13ee180a25b3a3a55db?context=repo), or use the `./Dockerfile`.
+Use a docker image [ihany/ros:foxy-fsimros](https://hub.docker.com/layers/ihany/ros/foxy-fsimros/images/sha256-ec32acd18c74ae521294a90aa7616a513494959f33c6c13ee180a25b3a3a55db?context=repo), or use the `./Dockerfile` (supported platforms: `linux/amd64`, `linux/arm64`).
 - Source `./dev_ws` in the docker image by `. install/setup.zsh`.
     - (Recommended) Enter a tmux session by `ts your_session_name`.
 - Move to: `cd ~/.julia/dev/FSimROS`.
