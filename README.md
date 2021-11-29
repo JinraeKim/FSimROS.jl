@@ -37,7 +37,7 @@ See the result (video speed adjusted):
 - [x] sync issues (maybe?) for divergence of controller (which requires integration)
     - Perhaps, we need a central node for topic `time` and each simulation and controller receives the `time` to propagate own dynamical system and adaptive control system.
 - [x] Update the docker image's building process to include FSimROS.jl
-- [ ] **Reduce first-execution delay of Julia code**
+- [x] **Reduce first-execution delay of Julia code**
 - [ ] Add an example of processor-in-the-loop simulation (PILS) with Pixhawk.
 
 
@@ -46,3 +46,5 @@ See the result (video speed adjusted):
 - Put `./src/fsim_interfaces` in `dev_ws/src` (ROS2 convention; don't be confused with `./src`) where your ROS2 workspace is, namely, `dev_ws`.
 - Tested with only few test environments, e.g., Ubuntu 20.04, ROS2 foxy, docker.
 - You must properly source the appropriate workspace in every terminal.
+- I was trying to reduce the first-execution delay (startup latency) of Julia code using [PackageCompiler.jl](https://github.com/JuliaLang/PackageCompiler.jl), but it failed.
+Instead, simply adding auxiliary lines as the initialisation of each node works well.
