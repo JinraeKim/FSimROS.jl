@@ -8,7 +8,7 @@ Note that `./src/fsim_interfaces` is a ROS2 package for providing interfaces of 
 - Put `./src/fsim_interfaces` in `dev_ws/src` (ROS2 convention; don't be confused with `./src`) where your ROS2 workspace is, namely, `dev_ws`.
 - (Startup latency)
 Using [PackageCompiler.jl](https://github.com/JuliaLang/PackageCompiler.jl) might be a good solution to this issue.
-For this, see `test/precompile.jl` (and it is definitely helpful).
+For this, see `test/precompile.jl` (some modification may be required to execute the code).
 However,
 this remedy did not solve this issue completely.
 Instead,
