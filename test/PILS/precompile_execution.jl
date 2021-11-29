@@ -101,39 +101,6 @@ function plot_figs(multicopter, x)
 end
 
 
-@pydef mutable struct PublisherNode <: rosNode.Node
-	function __init__(self)
-		rosNode.Node.__init__(self, "publisher_node")
-		self.t = 0.0
-		self.i = 0
-		self.publisher_ = self.create_publisher(std_msg.Float64, "time", 5)
-		function timer_callback(self)
-			msg = std_msg.Float64()
-			msg.data = self.t
-			self.publisher_.publish(msg)
-			self.i = self.i + 1
-			if self.i > 10
-				self.destroy_node()
-			end
-		end
-		self.timer = self.create_timer(0.01, () -> timer_callback(self))
-	end
-end
-
-@pydef mutable struct SubscriberNode <: rosNode.Node
-	function __init__(self)
-		rosNode.Node.__init__(self, "subscriber_node")
-		self.t = nothing
-		self.subscription = self.create_subscription(std_msg.Float64, "time", msg -> listener_callback(self, msg), 10)
-		function listener_callback(self, msg)
-			self.t = msg.data
-			if self.t != nothing
-				self.destroy_node()
-			end
-		end
-	end
-end
-
 function main()
 	t = 0.01
 	multicopter = LeeHexacopter()
@@ -159,15 +126,7 @@ function main()
 
 	# plot figures
 	println("plotting test...")
-	# plot_figs(multicopter, state0)
-	# nodes
-	println("rclpy test...")
-	rclpy.init(args=nothing)
-	pub_node = PublisherNode()
-	sub_node = SubscriberNode()
-	rclpy.spin(sub_node)
-	rclpy.spin(pub_node)
-	rclpy.shutdown()
+	plot_figs(multicopter, state0)
 end
 
 main()
