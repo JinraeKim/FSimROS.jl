@@ -15,6 +15,7 @@ create_sysimage(
 		 "OnlineStats",
 		 "DataFrames",
 		 "ComponentArrays",
+		 "DifferentialEquations",
 		 ],
 		sysimage_path="sys_pils.so",
 		precompile_execution_file="test/PILS/precompile_execution.jl",

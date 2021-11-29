@@ -2,6 +2,7 @@ using PyCall
 using FlightSims
 using FSimROS
 using UnPack
+using DifferentialEquations
 
 rclpy = pyimport("rclpy")
 rosNode = pyimport("rclpy.node")
@@ -50,6 +51,8 @@ end
         @unpack m, g = self.env.multicopter
         u0 = (m*g/6) * ones(6)  # initial control input (actually meaningless; for initialisation of simulator)
         self.simulator = Simulator(state0, Dynamics!(self.env), u0; tf=100)  # second
+        step_until!(self.simulator, timer_period)  # to reduce startup latency
+        reinit!(self.simulator)  # to reduce startup latency
         # subscriber
         self.control_received = false
         function listener_callback(self, msg_control)

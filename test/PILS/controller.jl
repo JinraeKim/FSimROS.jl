@@ -4,6 +4,7 @@ using FSimROS
 using DataFrames
 using UnPack
 using ComponentArrays
+using DifferentialEquations
 
 rclpy = pyimport("rclpy")
 rosNode = pyimport("rclpy.node")
@@ -93,6 +94,8 @@ end
         self.env = ControllerEnv(pos_cmd_func)
         x0 = State(self.env.multicopter)()  # dummy initial state of multicopter
         self.simulator = Simulator(State(self.env)(), Dynamics!(self.env), x0; tf=100)  # second
+        step_until!(self.simulator, timer_period)  # to reduce startup latency
+        reinit!(self.simulator)  # to reduce startup latency
         # subscriber
         self.state_multicopter_received = false
         function listener_callback(self, msg_state)
