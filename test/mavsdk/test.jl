@@ -8,7 +8,8 @@ from mavsdk import System
 async def run():
     # Init the drone
     drone = System()
-    await drone.connect(system_address="udp://:14540")
+    # await drone.connect(system_address="udp://:14540")
+    await drone.connect(system_address="serial:///dev/ttyACM0")
 
     # Start the tasks
     asyncio.ensure_future(print_battery(drone))
@@ -21,4 +22,4 @@ async def print_battery(drone):
 # Start the main function
 py"asyncio.ensure_future(run())"
 # Runs the event loop until the program is canceled with e.g. CTRL-C
-py"asyncio.get_event_loop().run_forever()()
+py"asyncio.get_event_loop().run_forever()"
