@@ -45,11 +45,21 @@ See the result (video speed adjusted):
 
 ![Alt Text](./figures/sim_trajectory_tracking.gif)
 
+### MAVSDK example
+See `test/mavsdk/test.jl`.
+Note that you should be careful for the `system_address`:
+```python3
+await drone.connect(system_address="serial:///dev/ttyACM0")
+```
+Also, if you run a docker container, you should make sure that USB connection can be detected in the docker container. It can be activated with option e.g. `--device=/dev/ttyACM0`.
+
 ## To-do
 - [x] sync issues (maybe?) for divergence of controller (which requires integration)
     - Perhaps, we need a central node for topic `time` and each simulation and controller receives the `time` to propagate own dynamical system and adaptive control system.
 - [x] Update the docker image's building process to include FSimROS.jl
 - [x] **Reduce first-execution delay of Julia code**
+- [x] Add a minimal [MAVSDK-python](https://github.com/mavlink/MAVSDK-Python) example
+- [ ] Add a [MAVSDK-python](https://github.com/mavlink/MAVSDK-Python) example with ROS2
 - [ ] Make the docker image stable, i.e., consistent version control of Julia packages
 - [ ] Add an example of processor-in-the-loop simulation (PILS) with Pixhawk.
 
