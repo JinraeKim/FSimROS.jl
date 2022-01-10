@@ -45,6 +45,9 @@ See the result (video speed adjusted):
 
 ![Alt Text](./figures/sim_trajectory_tracking.gif)
 
+### MAVSDK-Python + ROS2
+See `test/mavsdk-ros2`. Currently, Python code is implemented (not Julia code).
+
 ## To-do
 - [x] sync issues (maybe?) for divergence of controller (which requires integration)
     - Perhaps, we need a central node for topic `time` and each simulation and controller receives the `time` to propagate own dynamical system and adaptive control system.
@@ -56,4 +59,3 @@ See the result (video speed adjusted):
 
 ## Notes
 - Tested with only few test environments, e.g., Ubuntu 20.04, ROS2 foxy, docker.
-
