@@ -46,7 +46,12 @@ See the result (video speed adjusted):
 ![Alt Text](./figures/sim_trajectory_tracking.gif)
 
 ### MAVSDK-Python + ROS2
-See `test/mavsdk-ros2`. Currently, Python code is implemented (not Julia code).
+See `test/mavsdk-ros2`.
+Currently, Python code is implemented (not Julia code).
+To run the code in a docker container, one should connect the host's peripheral (device) with the option `--device` such as `--device=/dev/ttyACM0`.
+```
+docker run --name ros --network host --rm -it -e display=$display -v /tmp/.x11-unix:/tmp.x11-unix --device=/dev/ttyACM0 ihany/ros:foxy-fsimros
+```
 
 ## To-do
 - [x] sync issues (maybe?) for divergence of controller (which requires integration)
